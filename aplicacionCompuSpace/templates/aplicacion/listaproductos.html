@@ -1,0 +1,29 @@
+{% extends "plantillas/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Marca</th>
+      <th>Precio</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for comp in componentes %}
+    <tr>
+      <td>{{comp.nombre}}</td>
+      <td>{{comp.marca}}</td>
+      <td>{{comp.precio}}</td>
+      <td>{{comp.stock}}</td>
+      <td><a href="{% url "detallecomponente" comp.id %}" role="button" class="btn btn-info text-light">Modificar</a></td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+
+
+{% endblock contenido %}

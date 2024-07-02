@@ -1,0 +1,163 @@
+{% extends "plantillas/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4"> Registro de Usuario</h2>
+                <form class="mb-3 custom-form " action="" method="post">
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    
+                 
+                    
+                    <div class="d-flex justify-content-end">
+                        <input type="submit" value="Registrarse" class='btn btn-success text-light btn-lg'>
+                    </div>
+    
+                </form>
+                <!--<form class="mb-3 custom-form  " onsubmit="return validarForm()" action="" method="get">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="firstName"
+                                    placeholder="Ingrese su nombre">
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="apellidos" class="form-label">Apellido</label>
+                                <input type="text" class="form-control " id="apellidos" name="lastName"
+                                    placeholder="Ingrese su apellido">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rut" class="form-label">RUT</label>
+                        <input name="rut" id="rut" type="text" class=" form-control"
+                            placeholder="Ej: xxxxxxx-x">
+
+                    </div>
+                    <p id="alerta">
+                        <span id="mensaje"></span>
+                    </p>
+                    <div class="mb-3">
+                        <label for="mail" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="mail" name="mail"
+                            placeholder="Ingrese su correo electrónico">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="region" class="form-label">Región</label>
+                                <select class="form-select" id="region" name="region">
+                                    <option value="">Seleccione una región</option>
+                                    <option value="1">Región de Arica y Parinacota</option>
+                                    <option value="2">Región de Tarapacá</option>
+                                    <option value="3">Región de Antofagasta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="comuna" class="form-label">Comuna</label>
+                                <select class="form-select" id="comuna" name="comuna">
+                                    <option value="">Seleccione una comuna</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="address" name="address"
+                            placeholder="Ingrese su dirección">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password1" name="password1"
+                                placeholder="Ingrese su contraseña">
+                            <button class="btn btn-outline-secondary" type="button" id="showPassword1">Mostrar</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Reingresar Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password2" name="password2"
+                                placeholder="Ingrese su contraseña">
+                            <button class="btn btn-outline-secondary" type="button" id="showPassword2">Mostrar</button>
+                        </div>
+                    </div>
+                    <div id="message" class="error-message"></div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-success text-light" value="Registrarse">
+                    </div>
+                </form>-->
+
+            </div>
+        </div>
+    </div>
+    <!--<script src="js/validarnom.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#showPassword1').on('click', function () {
+                var passwordField = $('#password1');
+                var passwordFieldType = passwordField.attr('type');
+                if (passwordFieldType === 'password') {
+                    passwordField.attr('type', 'text');
+                    $(this).text('Ocultar');
+                } else {
+                    passwordField.attr('type', 'password');
+                    $(this).text('Mostrar');
+                }
+            });
+
+            $('#showPassword2').on('click', function () {
+                var passwordField = $('#password2');
+                var passwordFieldType = passwordField.attr('type');
+                if (passwordFieldType === 'password') {
+                    passwordField.attr('type', 'text');
+                    $(this).text('Ocultar');
+                } else {
+                    passwordField.attr('type', 'password');
+                    $(this).text('Mostrar');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Definir las opciones de comunas según la región seleccionada
+        document.getElementById('region').addEventListener('change', function () {
+            var region = this.value;
+            var comunaSelect = document.getElementById('comuna');
+            // Limpiar las opciones actuales
+            comunaSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
+            // Llenar las opciones de comuna según la región seleccionada
+            if (region === '1') { // Región de Arica y Parinacota
+                comunaSelect.innerHTML += '<option value="1">Arica</option>';
+                comunaSelect.innerHTML += '<option value="2">Camarones</option>';
+                // Agrega más opciones según las comunas de la región
+            } else if (region === '2') { // Región de Tarapacá
+                comunaSelect.innerHTML += '<option value="3">Iquique</option>';
+                comunaSelect.innerHTML += '<option value="4">Alto Hospicio</option>';
+                // Agrega más opciones según las comunas de la región
+            } else if (region === '3') { // Región de Antofagasta
+                comunaSelect.innerHTML += '<option value="5">Antofagasta</option>';
+                comunaSelect.innerHTML += '<option value="6">Mejillones</option>';
+                // Agrega más opciones según las comunas de la región
+            }
+            // Agrega más bloques "else if" según las regiones que desees manejar
+        });
+    </script>-->
+{% endblock contenido %}

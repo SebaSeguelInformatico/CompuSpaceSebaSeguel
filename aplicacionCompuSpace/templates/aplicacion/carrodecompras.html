@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Carro de compras</title>
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/compuspace.png" alt="Avatar Logo" style="width:50px;" class="rounded-pill">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="componentes.html">Componentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marcas.html">Marcas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contacto</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Panel de control</a>
+                        <div class="dropdown-menu bg-dark shadow drophovercustom" aria-labelledby="dropdownId">
+                            <a class="dropdown-item drophovercustom" href="productos.html">Productos</a>
+                            <a class="dropdown-item drophovercustom" href="pedidos.html">Pedidos</a>
+                            <a class="dropdown-item drophovercustom" href="clientes.html">Clientes</a>
+                            <a class="dropdown-item drophovercustom" href="ventas.html">Ventas</a>
+                        </div>
+                    </li>
+
+                </ul>
+                <form class="d-flex ">
+                    <input class="form-control me-2 " type="text" placeholder="Buscar">
+                    <button class="btn btn-primary" type="button">Buscar</button>
+                </form>
+                <ul class="navbar-nav me-2">
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext" href="login.html">Iniciar
+                                sesión</a></span>
+                    </li>
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext"
+                                href="carrodecompras.html">Carro</a></span>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Carro</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Procesador Intel® Core™ i7-10700K</h5>
+                        <img class="card-img-top" src="img/Procesadores/intel-i7-10700k.jpg" alt="Card image"  style="width:20%">
+                        <p class="card-text">Cantidad de núcleos. 8 ; Total de subprocesos. 16 ; Frecuencia turbo máxima. 5.10 GHz</p>
+                        <p class="card-text">$200.990</p>
+
+                        <!-- Botón para aumentar cantidad -->
+                        <button class="btn btn-secondary" onclick="decrementQuantity()">-</button>
+
+                        <!-- Campo para mostrar la cantidad de productos -->
+                        <input type="text" class="form-control d-inline-block w-25 mx-2 text-center" id="quantityInput" value="1">
+
+                        <!-- Botón para disminuir cantidad -->
+                        <button class="btn btn-secondary" onclick="incrementQuantity()">+</button>
+
+                        <button class="btn btn-danger">Eliminar</button>
+                        
+                    </div>
+                    <button class=" col-md-4 btn btn-warning">Vaciar Carro de Compras</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2>Resumen de la compra </h2>
+                <ul class="list-group">
+                    
+                    <li class="list-group-item">Total Precio Normal $200.990</li>
+                
+                </ul>
+                <a href="index.html" class="btn btn-success mt-3" >Seguir Comprando</a>
+                <a href="tipo_de_entrega.html" class="btn btn-primary mt-3">Pagar</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <footer class="bg-dark text-white">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Compuspace</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="contato.html">Contacto</a></li>
+                        <li><a href="terminoycondiciones.html">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Información de contacto</h5>
+                    <p>Dirección: 123 Calle Principal</p>
+                    <p>Email: info@ejemplo.com</p>
+                    <p>Teléfono: +123456789</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces a redes sociales</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href=""><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>© 2024 Compuspace. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <ul class="list-inline">
+    
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+
+</html>

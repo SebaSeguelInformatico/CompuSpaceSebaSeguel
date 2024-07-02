@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static "img/compuspace.png" %}" alt="Avatar Logo" style="width:50px;" class="rounded-pill">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="componentes.html">Componentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="marcas.html">Marcas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contacto</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Panel de control</a>
+                        <div class="dropdown-menu bg-dark shadow drophovercustom" aria-labelledby="dropdownId">
+                            <a class="dropdown-item drophovercustom" href="{% url "listaProductos" %}">Productos</a>
+                            <a class="dropdown-item drophovercustom" href="pedidos.html">Pedidos</a>
+                            <a class="dropdown-item drophovercustom" href="clientes.html">Clientes</a>
+                            <a class="dropdown-item drophovercustom" href="ventas.html">Ventas</a>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                </ul>
+                <form class="d-flex ">
+                    <input class="form-control me-2 " type="text" placeholder="Buscar">
+                    <button class="btn btn-primary" type="button">Buscar</button>
+                </form>
+                <ul class="navbar-nav me-2">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext" href="{% url "logout" %}">cerrar
+                                sesión</a></span>
+                    </li>
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext" href="{% url "index" %}">{{user.username}}</a></span>
+                    </li>
+                    {% else %}
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext" href="{% url "login" %}">Iniciar
+                                sesión</a></span>
+                    </li>
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext"
+                                href="carrodecompras.html">Carro</a></span>
+                    </li>
+                    {% endif %}
+                    
+
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    {% block contenido %}
+    {% endblock contenido %}
+    
+    <footer class="bg-dark text-white">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Compuspace</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="contato.html">Contacto</a></li>
+                        <li><a href="terminoycondiciones.html">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Información de contacto</h5>
+                    <p>Dirección: 123 Calle Principal</p>
+                    <p>Email: compuspace@ejemplo.com</p>
+                    <p>Teléfono: +123456789</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces a redes sociales</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href=""><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <section class="weather-content">
+                        <h1>Buscador del clima</h1>
+                        <div class="result">
+                            <p>Agrege cuidad y pais</p>
+
+                        </div>
+                        <form action="" method="POST" class="get-weather">
+                            <input type="text" name="city" id="city" placeholder="Escribe tu cuidad...">
+                            <select name="" id="country">
+                                <option disabled selected value="">Selecciona el Pais</option>
+
+                                <option value="CL">Chile</option>
+
+                            </select>
+                            <input type="submit" name="" id="" value="Obtener el clima">
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>© 2024 Compuspace. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <ul class="list-inline">
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</body>
+</html>
