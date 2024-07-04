@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from .models import User, componente
-from .forms import UserForm
+from .forms import UserForm,componenteForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib import messages
 from django.contrib.auth import logout
+from .listas import MARCAS
 
 def index(request):
     componentes = componente.objects.all()
@@ -52,14 +53,64 @@ def listaProductos(request):
 
     return render(request,'aplicacion/listaproductos.html',datos)
 
-def detallecomp(request,idcomp):
-    comp=get_object_or_404(componente,idcomp=id)
-    datos={
+def detalle(request,id):
+    comp=get_object_or_404(componente,id=id)
 
-        "componente":comp
+    Marca = 'N/A'
+
+    for marca in MARCAS:
+        if marca[0] == comp.marca:
+            Marca = marca[1]
+    datos={
+        "componente":comp,
+        "marca":Marca,
     }
 
-    return render(request,'aplicacion/detallecomponente.html', datos)
+    return render(request,'aplicacion/detalle.html', datos)
+
+def detallecomp(request,id):
+    if id == '0':
+        form=componenteForm()
+        datos={
+            'form':form
+        }
+
+        if request.method=="POST":
+           form=componenteForm(data=request.POST)
+           if form.is_valid():
+            form.save()
+            messages.success(request,'Componente creado')
+            return redirect(to='listaProductos')
+            
+
+        return render(request,'aplicacion/detallecomponente.html', datos)
+    else:
+        comp=get_object_or_404(componente,id=id)
+        form=componenteForm(instance=comp)
+        datos={
+
+           "componente":comp,
+            'form':form
+        }
+
+        botonpresionado = None
+
+        if request.method=="POST":
+           botonpresionado = request.POST.get('boton')
+           form=componenteForm(data=request.POST,instance=comp)
+        if botonpresionado == 'eliminar':
+            print("componente eliminado")
+            comp.delete()
+            messages.error(request,'Componente eliminado')
+            return redirect(to='listaProductos')
+        else:
+            if form.is_valid():
+                form.save()
+                
+                messages.info(request,'Componente modificado')
+                return redirect(to='listaProductos')
+
+        return render(request,'aplicacion/detallecomponente.html', datos)
 
 
 # Create your views here.

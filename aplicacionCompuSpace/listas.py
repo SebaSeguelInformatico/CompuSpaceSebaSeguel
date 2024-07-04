@@ -20,6 +20,14 @@ COMUNAS = {
 }
 
 MARCAS = {
-    ("amd","AMD"),
-    ("nvidia","NVIDIA"),
+    ("AMD","Advanced Micro Devices (AMD)"),
+    ("Asus","Asustek Computer Inc."),
+    ("Intel","Integrated Electronics (Intel)"),
+    ("Kingston","Kingston Technology Corporation"),
+    ("MSI","Micro-Star International (MSI)"),
+    ("Gigabyte","Gigabyte Technology Co., Ltd."),
+    ("EVGA","EVGA Corporation"),
+    ("SanDisk","SanDisk Corporation"),
+    ("Deepcool","Deepcool Industries Co., Ltd."),
+    ("Nvidia","Nvidia Corporation"),
 }

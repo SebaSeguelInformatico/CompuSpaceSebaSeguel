@@ -16,5 +16,5 @@ class User(AbstractUser):
 class componente(models.Model):
     nombre = models.CharField(max_length=50)
     marca = models.CharField(max_length=50, choices=MARCAS)
-    precio = models.IntegerField()
-    stock = models.IntegerField()
+    precio = models.IntegerField(validators=[MinValueValidator(0)])
+    stock = models.IntegerField(validators=[MinValueValidator(0)])

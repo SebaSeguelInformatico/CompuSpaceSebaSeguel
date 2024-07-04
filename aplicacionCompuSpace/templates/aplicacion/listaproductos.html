@@ -1,7 +1,10 @@
 {% extends "plantillas/base.html" %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block contenido %}
+
+<a href="{% url "detallecomponente" 0 %}" role="button" class="btn btn-success text-light">Añadir componente +</a>
 
 <table class="table">
   <thead>
@@ -17,7 +20,7 @@
     <tr>
       <td>{{comp.nombre}}</td>
       <td>{{comp.marca}}</td>
-      <td>{{comp.precio}}</td>
+      <td>${{comp.precio | intcomma}}</td>
       <td>{{comp.stock}}</td>
       <td><a href="{% url "detallecomponente" comp.id %}" role="button" class="btn btn-info text-light">Modificar</a></td>
     </tr>
