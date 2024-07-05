@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import User, componente, elementoCarrito
+from .models import User, componente, elementoCarrito, pedido, elementoPedido
 from .forms import UserForm,componenteForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib import messages
@@ -190,6 +190,7 @@ def metodoPago(request):
 def pagoRealizado(request):
 
     elementos = elementoCarrito.objects.filter(usuario=request.user).select_related('componente')
+
     totalPrecio = calcularPrecio(elementos)
 
     for elemento in elementos:
@@ -201,14 +202,40 @@ def pagoRealizado(request):
     }
 
     if request.method == "POST":
+
+        pedidocompra = pedido.objects.create(usuario=request.user, totalprecio=0)
+
+        totalPrecio = 0
+
         for elemento in elementos:
 
             component = get_object_or_404(componente, id=elemento.componente.id)
 
+            totalPrecio += elemento.cantidad * component.precio
+
+
+
             component.stock -= elemento.cantidad
+
+            elementoPedido.objects.create(componente=component,pedido=pedidocompra,precio = component.precio,cantidad=elemento.cantidad)
+
             component.save()
             elemento.delete()
 
+        pedidocompra.totalprecio = totalPrecio
+        pedidocompra.save()
+
     return render(request,'aplicacion/pagorealizado.html',datos)
+
+def usuario(request):
+    pedidos = pedido.objects.filter(usuario = request.user)
+    elementosPedidos = elementoPedido.objects.select_related('componente').all()
+
+    datos={
+        'pedidos':pedidos,
+        'elementos':elementosPedidos
+    }
+
+    return render(request,'aplicacion/usuario.html',datos)
 
 # Create your views here.

@@ -31,3 +31,11 @@ MARCAS = {
     ("Deepcool","Deepcool Industries Co., Ltd."),
     ("Nvidia","Nvidia Corporation"),
 }
+
+ESTADOS = {
+    ("Preparando","Preparando"),
+    ("En camino","En camino"),
+    ("Listo para recoger","Listo para recoger"),
+    ("Entregado","Entregado"),
+    ("Cancelado","Cancelado")
+}

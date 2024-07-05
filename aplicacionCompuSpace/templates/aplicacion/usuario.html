@@ -1,0 +1,47 @@
+{% extends "plantillas/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+    <div class="container">
+        <h1>{{user.username}}</h1>
+        <p>{{user.first_name}}  {{user.last_name}}</p>
+        <div class="container">
+            <h2>PEDIDOS</h2>
+            {% for pedido in pedidos %}
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th>pedido: {{pedido.fecha}}</th>
+                      <th>estado: {{pedido.estado}}</th>
+                    </tr>
+                  </thead>
+                <thead>
+                  <tr>
+                    <th>Componente</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for elemento in elementos %}
+                  {% if elemento.pedido == pedido %}
+                  <tr>
+                    <td>{{elemento.componente.nombre}}</td>
+                    <td>{{elemento.cantidad}}</td>
+                    <td>${{elemento.precio | intcomma}}</td>
+                  </tr>
+                  {% endif %}
+                  {%endfor%}
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>total: ${{pedido.totalprecio | intcomma}}</th>
+                  </tr>
+                </tbody>
+                
+              </table>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock contenido %}
