@@ -23,8 +23,10 @@
           <!-- Agregar más características según sea necesario -->
         </ul>
         <h3 class="text-danger">${{componente.precio | intcomma}}</h3>
-        
-        <a href="carrodecompras.html" class="btn btn-primary">Comprar Ahora</a>
+        <form action="" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Comprar Ahora</button>
+        </form>
       </div>
     </div>
 </div>

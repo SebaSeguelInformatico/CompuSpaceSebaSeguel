@@ -18,3 +18,8 @@ class componente(models.Model):
     marca = models.CharField(max_length=50, choices=MARCAS)
     precio = models.IntegerField(validators=[MinValueValidator(0)])
     stock = models.IntegerField(validators=[MinValueValidator(0)])
+
+class elementoCarrito(models.Model):
+    componente = models.ForeignKey(componente,on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User,on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=1,validators=[MinValueValidator(0)])

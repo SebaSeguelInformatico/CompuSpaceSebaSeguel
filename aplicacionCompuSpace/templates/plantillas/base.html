@@ -35,10 +35,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Panel de control</a>
                         <div class="dropdown-menu bg-dark shadow drophovercustom" aria-labelledby="dropdownId">
-                            <a class="dropdown-item drophovercustom" href="{% url "listaProductos" %}">Productos</a>
-                            <a class="dropdown-item drophovercustom" href="pedidos.html">Pedidos</a>
-                            <a class="dropdown-item drophovercustom" href="clientes.html">Clientes</a>
-                            <a class="dropdown-item drophovercustom" href="ventas.html">Ventas</a>
+                            <a class="dropdown-item drophovercustom text-light" href="{% url "listaProductos" %}">Productos</a>
+                            <a class="dropdown-item drophovercustom text-light" href="pedidos.html">Pedidos</a>
+                            <a class="dropdown-item drophovercustom text-light" href="clientes.html">Clientes</a>
+                            <a class="dropdown-item drophovercustom text-light" href="ventas.html">Ventas</a>
                         </div>
                     </li>
                     {% endif %}
@@ -57,14 +57,14 @@
                     <li>
                         <span id="sesionlink"><a class="nav-link text-light sesiontext" href="{% url "index" %}">{{user.username}}</a></span>
                     </li>
+                    <li>
+                        <span id="sesionlink"><a class="nav-link text-light sesiontext"
+                                href="{% url "carroCompras" %}">Carro</a></span>
+                    </li>
                     {% else %}
                     <li>
                         <span id="sesionlink"><a class="nav-link text-light sesiontext" href="{% url "login" %}">Iniciar
                                 sesión</a></span>
-                    </li>
-                    <li>
-                        <span id="sesionlink"><a class="nav-link text-light sesiontext"
-                                href="carrodecompras.html">Carro</a></span>
                     </li>
                     {% endif %}
                     

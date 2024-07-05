@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import User, componente
+from .models import User, componente, elementoCarrito
 from .forms import UserForm,componenteForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib import messages
 from django.contrib.auth import logout
 from .listas import MARCAS
+from django.http import JsonResponse
 
 def index(request):
     componentes = componente.objects.all()
@@ -66,6 +67,16 @@ def detalle(request,id):
         "marca":Marca,
     }
 
+    
+
+    if request.method=="POST":
+        elemento, creado = elementoCarrito.objects.get_or_create(componente=comp,usuario=request.user)
+        if not creado:
+            elemento.cantidad += 1
+        elemento.save()
+
+        return redirect(to="carroCompras")
+
     return render(request,'aplicacion/detalle.html', datos)
 
 def detallecomp(request,id):
@@ -112,5 +123,92 @@ def detallecomp(request,id):
 
         return render(request,'aplicacion/detallecomponente.html', datos)
 
+def calcularPrecio(elementos):
+    return sum(elemento.componente.precio * elemento.cantidad for elemento in elementos)
+    
+
+def carroCompras(request):
+    elementos = elementoCarrito.objects.filter(usuario=request.user).select_related('componente')
+    totalPrecio = calcularPrecio(elementos)
+
+    datos = {
+        'elementos': elementos,
+        'totalPrecio': totalPrecio
+    }
+
+    if request.method == "POST":
+        elemento_id = request.POST.get('elemento_id')
+        elemento = get_object_or_404(elementoCarrito, id=elemento_id)
+        accion = request.POST.get('accion')
+        print(accion)
+
+        if accion == 'actualizar':
+            botonpresionado = request.POST.get('boton')
+            print(botonpresionado)
+
+            elemento.cantidad += int(botonpresionado)
+
+            if elemento.cantidad <= 0:
+                print("se pasó del mínimo")
+                elemento.cantidad = 1
+
+            elemento.save()
+
+        elif accion == 'eliminar':
+            print(elemento)
+            elemento.delete()
+
+        # Recalcular elementos y totalPrecio después de cualquier modificación
+        elementos = elementoCarrito.objects.filter(usuario=request.user).select_related('componente')
+        totalPrecio = calcularPrecio(elementos)
+        print(totalPrecio, "Actualizado" if accion == 'actualizar' else "Eliminado")
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            if accion == 'actualizar':
+                return JsonResponse({'cantidad': elemento.cantidad, 'total_precio': totalPrecio})
+            elif accion == 'eliminar':
+                return JsonResponse({'success': True, 'total_precio': totalPrecio})
+        else:
+            return redirect(to='carroCompras')
+
+    return render(request, 'aplicacion/carrodecompras.html', datos)
+
+def metodoPago(request):
+    elementos = elementoCarrito.objects.filter(usuario=request.user).select_related('componente')
+    totalPrecio = calcularPrecio(elementos)
+
+    for elemento in elementos:
+        elemento.total_precio = elemento.componente.precio * elemento.cantidad
+
+    datos = {
+        'elementos': elementos,
+        'totalPrecio': totalPrecio
+    }
+
+    return render(request,'aplicacion/metododepago.html',datos)
+
+def pagoRealizado(request):
+
+    elementos = elementoCarrito.objects.filter(usuario=request.user).select_related('componente')
+    totalPrecio = calcularPrecio(elementos)
+
+    for elemento in elementos:
+        elemento.total_precio = elemento.componente.precio * elemento.cantidad
+
+    datos = {
+        'elementos': elementos,
+        'totalPrecio': totalPrecio
+    }
+
+    if request.method == "POST":
+        for elemento in elementos:
+
+            component = get_object_or_404(componente, id=elemento.componente.id)
+
+            component.stock -= elemento.cantidad
+            component.save()
+            elemento.delete()
+
+    return render(request,'aplicacion/pagorealizado.html',datos)
 
 # Create your views here.
